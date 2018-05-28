@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>恋爱天数---星云链</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style type="text/css">
+			font-family: digit;		@font-face {
+			src: url('digital-7_mono.ttf') format("truetype");
+		}
+	</style>
+	<link href="css/default.css" type="text/css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/garden.js"></script>
+  <script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/nebPay.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" style="height:100%;" href="index.html"><img src="https://nebulas.io/assets/images/nebulasx60.png" style="width:180px; height:32px;" /></a>
+			<span style="font-size: 20px;display: block;float: left;line-height: 65px;">恋爱天数<span>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">记录</a></li>
+				<li><a href="search.html">搜索</a></li>
+				<!-- <li><a href="demo.html">演示</a></li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+	<div id="mainDiv">
+		<div id="message-box" style="top:80px; text-align:center;display:none;">
+			<div class="alert alert-warning" role="alert" id="message"></div>
+		</div>
+		<div id="content">
+			<div id="loveHeart">
+				<canvas id="garden"></canvas>
+				<div id="words">
+					<div id="messages">
+						<span id="lover"></span>, I have fallen in love with you for
+						<div id="elapseClock"></div>
+					</div>
+					<div id="loveu">
+						Love u forever and ever.<br/>
+						<div class="signature">- <span id="me"></span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="background:#2a2730; padding:20px 0px; color:#FFF;">
+		<div class="row">
+		  <div class="col-md-3">&nbsp;</div>
+			<div class="col-md-3">
+				<div style="font-size:20px; font-weight:200;">星云资源</div>
+				<div><a href="https://nebulas.io/" target="_blank">星云官网</a></div>
+				<div><a href="https://explorer.nebulas.io/" target="_blank">星云区块浏览器</a></div>
+				<div><a href="https://github.com/ChengOrangeJu/WebExtensionWallet" target="_blank">星云钱包插件（浏览器）</a></div>
+			</div>
+			<div class="col-md-3">
+				<div style="font-size:20px; font-weight:200;">星云DAPP</div>
+				<div><a href="http://nasdrop.info/" target="_blank">星云空投</a></div>
+			</div>
+		  <div class="col-md-3">&nbsp;</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+    var serialNumber; //交易序列号
+    var intervalQuery; //定时查询交易结果
+		var dappAddress = "n1hy4vPqbmQrkhUYDHa6Ktk2ecqUhRPYF8J";
+		// var dappAddress = "n1gopU45ZabAivnryhi7pmcX19n9tb6KHxc";
+		var walletAddress = getUrlParam('address');
+
+		var offsetX = $("#loveHeart").width() / 2;
+		var offsetY = $("#loveHeart").height() / 2 - 55;
+
+    //点击按钮发起交易, 这里为调用智能合约的例子
+    function onButtonClick() {
+        var to = dappAddress;   //Dapp的合约地址
+        var value = "0";
+        var callFunction = "get" //调用的函数名称
+				if(typeof walletAddress == 'undefined' || walletAddress == false || walletAddress == null){
+					var callArgs = '["n1P4ZEa3N1QiFiL58Uf3YUqz8v5fhuZhWBi"]'  //参数格式为参数数组的JSON字符串, 比如'["arg"]','["arg1","arg2]'
+				}else{
+					var callArgs = '["'+walletAddress+'"]';
+				}
+				nebPay.simulateCall(to, value, callFunction, callArgs, { //使用nebpay的simulateCall接口去执行get查询, 模拟执行.不发送交易,不上链
+					// callback: NebPay.config.testnetUrl,
+		  		listener: test //指定回调函数
+				});
+    }
+
+		function test(resp){
+			if(typeof resp == 'undefined' || resp == null){
+				$('#message').html('星云区块链网络异常，请稍后重试');
+				$('#message-box').fadeIn().delay(3000).fadeOut();
+			}else if(typeof resp.result == 'undefined' || resp.result == false || resp.result == null || resp.result == "null"){
+				$('#message').html('查询不到结果，请尝试添加记录');
+				$('#message-box').fadeIn().delay(3000).fadeOut();
+			}else{
+				var result = resp.result;
+				result = JSON.parse(result);
+				$('#lover').html(result.lover);
+				$('#me').html(result.me);
+				var startTime = new Date(parseInt(result.startTime));
+				init(startTime);
+			}
+		}
+
+		function init(startTime){
+			var together = new Date();
+			together.setFullYear(startTime.getFullYear(), startTime.getMonth(), startTime.getDate());
+			together.setHours(startTime.getHours());
+			together.setMinutes(startTime.getMinutes());
+			together.setSeconds(startTime.getSeconds());
+			together.setMilliseconds(0);
+
+			if (!document.createElement('canvas').getContext) {
+				var msg = document.createElement("div");
+				msg.id = "errorMsg";
+				msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
+				document.body.appendChild(msg);
+				$("#code").css("display", "none")
+				$("#copyright").css("position", "absolute");
+				$("#copyright").css("bottom", "10px");
+			    document.execCommand("stop");
+			} else {
+				setTimeout(function () {
+					startHeartAnimation();
+				}, 100);
+
+				timeElapse(together);
+				setInterval(function () {
+					timeElapse(together);
+				}, 100);
+
+				adjustCodePosition();
+				$("#code").typewriter();
+			}
+		}
+
+		//获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
+		onButtonClick();
+	</script>
+</body>
+</html>

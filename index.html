@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>恋爱天数---星云链</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style type="text/css">
+			font-family: digit;		@font-face {
+			     src: url('digital-7_mono.ttf') format("truetype");
+		  }
+	</style>
+	<link href="css/default.css" type="text/css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/jquery/1.10.1/jquery.min.js"></script>
+  <!-- <script type="text/javascript" src="js/jquery.js"></script> -->
+	<script type="text/javascript" src="js/garden.js"></script>
+  <!-- <script type="text/javascript" src="js/functions.js"></script> -->
+	<script type="text/javascript" src="js/nebPay.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script language="javascript" type="text/javascript" src="plugins/My97DatePicker/WdatePicker.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" style="height:100%;" href="index.html"><img src="https://nebulas.io/assets/images/nebulasx60.png" style="width:180px; height:32px;" /></a>
+      <span style="font-size: 20px;display: block;float: left;line-height: 65px;">恋爱天数<span>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li style="line-height:32px; font-size:16px;"><a href="index.html">记录</a></li>
+				<li style="line-height:32px; font-size:16px;"><a href="search.html">搜索</a></li>
+				<!-- <li style="line-height:32px; font-size:16px;"><a href="demo.html">演示</a></li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="row">
+    <div id="message-box" style="top:80px; text-align:center;display:none;">
+      <div class="alert alert-warning" role="alert" id="message"></div>
+    </div>
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6" style="margin-top:80px;min-height:700px;">
+        <form>
+          <div class="form-group" style="margin-bottom:25px;">
+            <div class="input-group input-group-lg">
+              <span class="input-group-addon" id="sizing-addon1">恋人姓名</span>
+              <input type="text" class="form-control" id="lover" placeholder="请输入恋人姓名" required aria-describedby="sizing-addon1">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:25px;">
+            <div class="input-group input-group-lg">
+              <span class="input-group-addon" id="sizing-addon1">开始日期</span>
+              <input type="text" class="form-control Wdate" id="startTime" placeholder="请选择你们相恋的开始日期" aria-describedby="sizing-addon1"
+               onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'%y-%M-%d %H:%m:%s'})">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:25px;">
+            <div class="input-group input-group-lg">
+              <span class="input-group-addon" id="sizing-addon1">我的姓名</span>
+              <input type="text" class="form-control" id="me" placeholder="请输入我的姓名" aria-describedby="sizing-addon1">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:25px;">
+            <div class="input-group input-group-lg">
+              <button type="button" id="submit" class="btn btn-default">数据上链</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3">&nbsp;</div>
+  </div>
+  <div style="background:#2a2730; padding:20px 0px; color:#FFF;">
+    <div class="row">
+      <div class="col-md-3">&nbsp;</div>
+      <div class="col-md-3">
+        <div style="font-size:20px; font-weight:200;">星云资源</div>
+        <div><a href="https://nebulas.io/" target="_blank">星云官网</a></div>
+        <div><a href="https://explorer.nebulas.io/" target="_blank">星云区块浏览器</a></div>
+        <div><a href="https://github.com/ChengOrangeJu/WebExtensionWallet" target="_blank">星云钱包插件（浏览器）</a></div>
+      </div>
+      <div class="col-md-3">
+        <div style="font-size:20px; font-weight:200;">星云DAPP</div>
+        <div><a href="http://nasdrop.info/" target="_blank">星云空投</a></div>
+      </div>
+      <div class="col-md-3">&nbsp;</div>
+    </div>
+  </div>
+  <script>
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+    var serialNumber; //交易序列号
+    var intervalQuery; //定时查询交易结果
+    var dappAddress = "n1hy4vPqbmQrkhUYDHa6Ktk2ecqUhRPYF8J";
+		// var dappAddress = "n1gopU45ZabAivnryhi7pmcX19n9tb6KHxc";
+    var intervalQuery; //定时查询交易结果
+
+    $(document).ready(function(){
+      $('#submit').on('click', function(){
+        var lover = $.trim($('#lover').val());
+        var startTime = $.trim($('#startTime').val());
+        var me = $.trim($('#me').val());
+        if(typeof lover ==  'undefined' || lover == false){
+          //alert('请输入恋人姓名');
+          $('#message').html('请输入恋人姓名');
+          $('#message-box').fadeIn().delay(3000).fadeOut();
+          return false;
+        }
+        if(typeof startTime == 'undefined' || startTime == false){
+          // alert('请选择你们相恋的开始日期');
+          $('#message').html('请选择你们相恋的开始日期');
+          $('#message-box').fadeIn().delay(3000).fadeOut();
+          return false;
+        }
+        if(typeof me == 'undefined' || me == false){
+          // alert('请输入我的姓名');
+          $('#message').html('请输入我的姓名');
+          $('#message-box').fadeIn().delay(3000).fadeOut();
+          return false;
+        }
+				$('#submit').attr("disabled", "disabled");
+				$('#message').html('正在打包上链，请耐心等待，可能需要15秒到1分钟不等...');
+        $('#message-box').fadeIn();
+
+        startTime = Date.parse(startTime);
+        serialNumber = nebPay.call(dappAddress, "0", "save", '["'+lover+'", "'+startTime+'", "'+me+'"]', {
+					listener: function (resp) {
+						if(resp == 'Error: Transaction rejected by user'){
+							$('#submit').removeAttr('disabled');
+							$('#message').html('您已取消交易');
+		          $('#message-box').fadeIn().delay(5000).fadeOut();
+						}else{
+							var hash = resp.txhash;
+							recheckTransactionReceipt(hash, function () {
+  							window.location.href="search.html";
+							})
+						}
+					},
+					// callback:NebPay.config.testnetUrl,
+        });
+        //设置定时查询交易结果
+        // intervalQuery = setInterval(function() {
+        //    funcIntervalQuery(serialNumber);
+        // }, 20000); //建议查询频率10-15s,因为星云链出块时间为15s,并且查询服务器限制每分钟最多查询10次。
+      });
+    });
+
+		function getTransactionReceipt(hash, callback){
+			// var rpcURL = "https://testnet.nebulas.io";
+			var rpcURL = "https://mainnet.nebulas.io";
+        $.post(rpcURL + '/v1/user/getTransactionReceipt', JSON.stringify({
+          "hash": hash
+        }), function (resp) {
+          callback(resp)
+        })
+      }
+
+
+      function recheckTransactionReceipt(hash, cb) {
+        var task = setInterval(function () {
+          getTransactionReceipt(hash, function (resp) {
+
+						console.log('---');
+						console.log(resp);
+						console.log('----');
+
+            var status = resp.result.status;
+            if(status == 1){
+              clearInterval(task);
+              cb();
+            }else if(status == 0){
+							$('#message').html('您已提交过数据。一个地址只能提交一次数据。');
+		          $('#message-box').fadeIn().delay(5000).fadeOut();
+							setInterval(function(){
+								window.location.reload();
+							}, 5000);
+						}
+          })
+        }, 3000);
+      }
+
+    function funcIntervalQuery(serialNumber){
+      //window.location.href="search.html";
+      // queryPayInfo的options参数用来指定查询交易的服务器地址,(如果是主网可以忽略,因为默认服务器是在主网查询)
+      nebPay.queryPayInfo(serialNumber, {
+        // callback: NebPay.config.testnetUrl
+      })   //search transaction result from server (result upload to server by app)
+          .then(function (resp) {
+              console.log("tx result: " + resp)   //resp is a JSON string
+              var respObject = JSON.parse(resp)
+              //code==0交易发送成功, status==1交易已被打包上链
+              if(respObject.code === 0 && respObject.data.status === 1){
+                  //交易成功,处理后续任务....
+                  clearInterval(intervalQuery)    //清除定时查询
+                  window.location.href="search.html";
+              }
+          })
+          .catch(function (err) {
+              console.log(err);
+          });
+    }
+
+    function clearInterval(intervalQuery){
+      intervalQuery = '';
+    }
+  </script>
+
+</body>
+</html>
